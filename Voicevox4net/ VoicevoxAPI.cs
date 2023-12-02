@@ -1,10 +1,14 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Voicevox4net;
 public class  VoicevoxAPI
 {
     private readonly string ipPort;
-    private string DownloadPath { set; get; };
+    private string DownloadPath { set; get; }
 
     public VoicevoxAPI(string _ipAdress, string _port)
     {
@@ -49,8 +53,9 @@ public class  VoicevoxAPI
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
+                    // Make wav file.
                     string fileName = _title + ".wav";
-                    using (var fileStream = File.Create(fileName))
+                    using (var fileStream = File.Create(DownloadPath + "/" + fileName))
                     {
                         using (var httpStream = await response.Content.ReadAsStreamAsync())
                         {
