@@ -3,6 +3,9 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Voicevox4net.Model;
+using System.Text;
+using System.Text.Json;
 
 namespace Voicevox4net;
 public class  VoicevoxAPI
@@ -71,5 +74,26 @@ public class  VoicevoxAPI
                 }
             }
         }
+    }
+
+    public async Task<List<SpeakerModel>> Speakers()
+    {
+        string jsonQuery;
+        using (var httpClient = new HttpClient())
+        {
+            string url = ipPort + "/speakers";
+            using (var request = new HttpRequestMessage(new HttpMethod("GET"), url))
+            {
+                request.Headers.TryAddWithoutValidation("accept", "application/json");
+
+                request.Content = new StringContent("");
+                request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/x-www-form-urlencoded");
+
+                var response = await httpClient.SendAsync(request);
+                jsonQuery = await response.Content.ReadAsStringAsync();
+            }
+        }
+        var list = JsonSerializer.Deserialize<List<SpeakerModel>>(jsonQuery);
+        return list;
     }
 }
