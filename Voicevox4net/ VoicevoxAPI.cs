@@ -8,7 +8,7 @@ namespace Voicevox4net;
 public class  VoicevoxAPI
 {
     private readonly string ipPort;
-    private string DownloadPath { set; get; }
+    public string DownloadPath { set; get; }
 
     public VoicevoxAPI(string _ipAdress, string _port)
     {
@@ -67,6 +67,7 @@ public class  VoicevoxAPI
                 else
                 {
                     Console.WriteLine("Error");
+                    throw new Exception();
                 }
             }
         }

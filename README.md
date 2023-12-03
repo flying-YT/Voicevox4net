@@ -18,8 +18,13 @@
     ```
     VoicevoxAPI voicevox = new VoicevoxAPI("server ip", "server port");
     ```
-4. If you want to specify the download folder
+4. If you want to specify the download folder<br>
     The default is the current directory.
     ```
     voicevox.DownloadPath = "path";
+    ```
+
+5. Specify the speaker and synthesize text into speech. Save in wav format.
+    ```
+    await voicevox.Synthesis("file name", "text", true, speakerId);
     ```
